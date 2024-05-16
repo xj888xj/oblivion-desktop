@@ -2,8 +2,6 @@ name: Publish
 
 permissions: write-all
 
-UPLOAD_RELEASE:true
-
 on:
     push:
         tags:

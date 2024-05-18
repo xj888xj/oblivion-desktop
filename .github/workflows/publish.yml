@@ -6,7 +6,7 @@ on:
     push:
         tags:
             - '*'
-    workflow_dispatch:           
+    workflow_dispatch:               
 
 jobs:
     publish:
@@ -18,7 +18,7 @@ jobs:
 
         strategy:
             matrix:
-                os: [windows-latest]
+                os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
             - name: Checkout git repo

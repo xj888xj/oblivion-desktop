@@ -15,21 +15,29 @@ import fs from 'fs';
 import settings from 'electron-settings';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import { isDev } from './lib/utils';
+import { exitTheApp, isDev } from './lib/utils';
 import { openDevToolsByDefault, useCustomWindowXY } from './dxConfig';
-import { disableProxy } from './lib/proxy';
 import './ipc';
 import { wpAssetPath, wpBinPath } from './ipcListeners/wp';
+import { devPlayground } from './playground';
 
 let mainWindow: BrowserWindow | null = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
+export const binAssetsPath = path.join(
+    app.getAppPath().replace('/app.asar', '').replace('\\app.asar', ''),
+    'assets',
+    'bin'
+);
+export const regeditVbsDirPath = path.join(binAssetsPath, 'vbs');
+
 if (!gotTheLock) {
     log.info("did'nt create new instance since there was already one running.");
     app.exit(0);
 } else {
-    log.info('creating new oblivion desktop instance...');
+    devPlayground();
+    log.info('creating new od instance...');
     (async () => {
         log.info(`exe: ${app.getPath('exe')}`);
         log.info(`userData: ${app.getPath('userData')}`);
@@ -160,12 +168,11 @@ if (!gotTheLock) {
                     // mainWindow.webContents.closeDevTools();
                 });
 
-                mainWindow.on('close', () => {
+                mainWindow.on('close', async () => {
                     canOpenFromSystem = false;
                 });
 
                 mainWindow.on('closed', async () => {
-                    await disableProxy();
                     mainWindow = null;
                 });
 
@@ -251,8 +258,7 @@ if (!gotTheLock) {
                     label: 'Exit',
                     type: 'normal',
                     click: async () => {
-                        await disableProxy();
-                        app.exit(0);
+                        await exitTheApp(mainWindow, regeditVbsDirPath);
                     }
                 }
             ]);
@@ -264,7 +270,7 @@ if (!gotTheLock) {
         // Remove this if your app does not use auto updates
         // eslint-disable-next-line
         // new AppUpdater();
-        log.info('oblivion desktop is ready!');
+        log.info('od is ready!');
     };
 
     /**
@@ -272,10 +278,7 @@ if (!gotTheLock) {
      */
 
     app.on('window-all-closed', async () => {
-        log.info('window-all-closed. exiting the app...');
-
-        await disableProxy();
-        app.exit(0);
+        exitTheApp(mainWindow, regeditVbsDirPath);
     });
 
     app.whenReady()

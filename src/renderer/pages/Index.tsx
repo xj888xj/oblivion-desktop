@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-//import ReactCountryFlag from 'react-country-flag';
 import Drawer from 'react-modern-drawer';
 import { Swipe } from 'react-swipe-component';
 import { useStore } from '../store';
@@ -167,7 +166,7 @@ export default function Index() {
             };
             http.send();
         } catch (error) {
-            setPing(0);
+            setPing(-1);
         }
     };
 
@@ -249,8 +248,10 @@ export default function Index() {
         if (ipData) {
             getIpLocation();
         }
-        if (ping < 1) {
-            getPing();
+        if (ping === 0) {
+            if ((isConnected && !ipData) || (isConnected && ipInfo?.countryCode)) {
+                getPing();
+            }
         }
 
         if (isLoading || !isConnected) {
@@ -290,6 +291,7 @@ export default function Index() {
                 });
                 ipcRenderer.sendMessage('wp-start');
                 setIsLoading(true);
+                setPing(0);
             }
         }
     };
@@ -382,7 +384,7 @@ export default function Index() {
                                     navigate('/options', { state: { targetId: 'languages' } });
                                 }}
                             >
-                                <i className='material-icons'>&#xe894;</i>
+                                <i className='material-icons'>&#xe8e2;</i>
                                 <span>{appLang?.home?.drawer_lang}</span>
                             </a>
                         </li>
@@ -451,10 +453,10 @@ export default function Index() {
                                 isConnected &&
                                     !isLoading &&
                                     proxyMode !== 'none' &&
-                                    proxyMode !== ''
-                                    ? 'active'
-                                    : '',
-                                ipData ? 'withIp' : ''
+                                    proxyMode !== '' &&
+                                    ipData
+                                    ? 'withIp active'
+                                    : ''
                             )}
                         >
                             <div
@@ -487,14 +489,16 @@ export default function Index() {
                             <div
                                 className={classNames('item', 'ping')}
                                 onClick={() => {
-                                    setPing(0);
-                                    setTimeout(async () => {
-                                        await getPing();
-                                    }, 1500);
+                                    if (ping >= 0) {
+                                        setPing(0);
+                                        setTimeout(async () => {
+                                            await getPing();
+                                        }, 1500);
+                                    }
                                 }}
                             >
                                 <i className='material-icons'>&#xebca;</i>
-                                <span className={ping > 0 ? '' : 'shimmer'}>
+                                <span className={ping === 0 ? 'shimmer' : ''}>
                                     {ping > 0
                                         ? String(ping).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ms'
                                         : 'timeout'}

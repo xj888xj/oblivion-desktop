@@ -42,9 +42,10 @@ technology
             </td>
         </tr>
         <tr>
-            <td>System Proxy</td>
+            <td>Network Configuration</td>
             <td>
-                :white_check_mark: Default<br>
+                :white_check_mark: Proxy(No Change)<br>
+                :white_check_mark: System Proxy<br>
                 :white_large_square: TUN
             </td>
         </tr>
@@ -120,16 +121,16 @@ technology
             <td>macOS</td>
             <td>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.pkg"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.pkg"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.pkg"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br>
             </td>
             <td></td>
         </tr>
         <tr>
             <td>Linux</td>
             <td>                
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-amd64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-linux-x86_64.rpm"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop"><img src="https://img.shields.io/badge/tar.xz-x64-f84e29.svg?logo=linux"> </a>
+                <small>Coming Soon ...</small>
             </td>
             <td></td>
         </tr>

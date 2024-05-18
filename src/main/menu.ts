@@ -1,4 +1,6 @@
 import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import { exitTheApp } from './lib/utils';
+import { regeditVbsDirPath } from './main';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
     selector?: string;
@@ -204,9 +206,9 @@ export default class MenuBuilder {
                     },
                     {
                         label: '&Close',
-                        accelerator: 'Ctrl+W',
-                        click: () => {
-                            this.mainWindow.close();
+                        accelerator: 'Ctrl+Q',
+                        click: async () => {
+                            await exitTheApp(this.mainWindow, regeditVbsDirPath);
                         }
                     }
                 ]

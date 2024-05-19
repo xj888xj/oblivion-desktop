@@ -49,12 +49,4 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   npm exec electron-builder -- --publish always
-                
-            - name : upload oblivion-desktop
-              uses: actions/upload-artifact@master
-              if: always()
-              with:
-                name: oblivion-desktop
-                path: /release
-
 

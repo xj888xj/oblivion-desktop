@@ -109,8 +109,8 @@ technology
         <tr>
             <td>Windows</td>
             <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/v0.2.52-beta/oblivion-desktop-win-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/download/v0.2.52-beta/oblivion-desktop-win-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
             </td>
             <td>
                 v10 x64<br>
@@ -120,10 +120,10 @@ technology
         <tr>
             <td>macOS</td>
             <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.dmg"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.dmg"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-arm64.pkg"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases/latest/download/oblivion-desktop-mac-x64.pkg"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br>
             </td>
             <td></td>
         </tr>
@@ -156,8 +156,10 @@ technology
 ## Get Involved
 
 We're a community-driven project, aiming to make the internet accessible for all. Whether you want to contribute code,
-suggest features, or need some help, we'd love to hear from you! Check out
-our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or submit a pull request.
+suggest features, or need some help, we'd love to hear from you!  
+Check out
+our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Contribution Guide](CONTRIBUTING.md) and [Developer Docs](DOCS.md).
+
 
 [![Stargazers over time](https://starchart.cc/bepass-org/oblivion-desktop.svg?variant=adaptive&background=%23FFFFFF&axis=%23333333&line=%23ffb300)](https://starchart.cc/bepass-org/oblivion-desktop)
 
@@ -166,19 +168,22 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues) or su
 * [FAQ.md](FAQ.md)
 * [License.md](LICENSE.md)
 * [SECURITY.md](SECURITY.md)
-* [DOCS.md](DOCS.md)
 
 ![virustotal.jpg](screenshot/virustotal.jpg)
 
 ## Acknowledgements
 
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following repositories:
+provided by the following:
 
 - Cloudflare Warp
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
 - [oblivion](https://github.com/bepass-org/oblivion)
+- [electron](https://www.electronjs.org/)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+- [electron-builder](https://github.com/electron-userland/electron-builder)
+- [GitHub](https://github.com/)
+- [regedit](https://www.npmjs.com/package/regedit)
 - [sing-box](https://github.com/SagerNet/sing-box)
 - [hiddify-next](https://github.com/hiddify/hiddify-next)
 - [and others 🧡](package.json)

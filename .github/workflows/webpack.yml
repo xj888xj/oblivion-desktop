@@ -50,3 +50,8 @@ jobs:
               run: |
                   npm exec electron-builder -- --publish always
 
+            - name: Release
+              uses: softprops/action-gh-release@v1
+              with:
+                draft: true
+                prerelease: true

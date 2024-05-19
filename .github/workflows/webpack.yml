@@ -50,12 +50,11 @@ jobs:
               run: |
                   npm exec electron-builder -- --publish always
                 
-              # Upload APK artifact
-            - name: Upload files to Artifacts
-              uses: actions/upload-artifact@v3
+            - name : upload oblivion-desktop
+              uses: actions/upload-artifact@master
+              if: always()
               with:
-                name: oblivion-${{ github.sha }}
-                path: |
-                  /release/
+                name: oblivion-desktop
+                path: ${{ github.workspace }}/app/build/outputs/release
 
 

@@ -56,5 +56,6 @@ jobs:
               with:
                 name: oblivion-${{ github.sha }}
                 path: |
-                  app/build/outputs/
+                  /release/
+
 

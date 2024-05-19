@@ -5,11 +5,6 @@ permissions: write-all
 on:
     workflow_dispatch:
 
-    env:
-      build_variant: ${{ matrix.build_variant }}
-      targets: ${{ matrix.targets }}
-      images_dir: /opt/images    
-
 jobs:
     publish:
         # To enable auto publishing to github, update your electron publisher

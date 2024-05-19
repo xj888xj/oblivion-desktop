@@ -1,9 +1,12 @@
-name: Publish
+name: webpack
 
 permissions: write-all
 
 on:
-    workflow_dispatch:
+    workflow_dispatch:    #手动触发开始编译
+    
+    watch:                #点☆Star触发开始编译
+      types: started
 
 jobs:
     publish:
@@ -50,8 +53,49 @@ jobs:
               run: |
                   npm exec electron-builder -- --publish always
 
-            - name: Release
-              uses: softprops/action-gh-release@v1
+            - name: Upload firmware to release
+              uses: softprops/action-gh-release@master
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                draft: true
-                prerelease: true
+                tag_name: ${{ steps.tag.outputs.release_tag }}
+                body_path: release.txt
+                files: ${{ env.FIRMWARE }}/*
+
+
+            - name: Upload Packages # 4. 打包文件并且上传到当前主分支
+              uses: actions/upload-artifact@master
+              with:
+                name: ${{env.FILE_NAME}}
+                path: ${{ env.IMAGES_PATH }}
+
+            - name: Upload firmware directory
+              uses: actions/upload-artifact@main
+              with:
+                name: ${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+                path: ${{ env.FIRMWARE }}
+
+
+            - name: 上传固件在github空间
+              uses: actions/upload-artifact@v2
+              with:
+                name: ${{matrix.target}}_${{ env.date }}
+                path: ${{ env.FIRMWARE }}
+
+            - name: 上传固件到「奶牛快传」和「wetransfer」
+              run: |
+                curl -fsSL git.io/file-transfer | sh
+                ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+                echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+                curl -fsSL git.io/file-transfer | sh
+                ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+                echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+            
+            - name: 提取发布用的「奶牛快传」跟「WeTransfer」的链接
+              run: |
+                curl -fsSL git.io/file-transfer | sh
+                ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+                echo "::set-env name=COWTRANSFER_URL::$(cat cowtransfer.log | grep https | cut -f3 -d" ")" 
+                curl -fsSL git.io/file-transfer | sh
+                ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+                echo "::set-env name=WETRANSFER_URL::$(cat wetransfer.log | grep https | cut -f3 -d" ")"    

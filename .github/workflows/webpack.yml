@@ -53,15 +53,6 @@ jobs:
               run: |
                   npm exec electron-builder -- --publish always
 
-            - name: Upload firmware to release
-              uses: softprops/action-gh-release@master
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                tag_name: ${{ steps.tag.outputs.release_tag }}
-                body_path: release.txt
-                files: ${{ env.FIRMWARE }}/*
-
 
             - name: Upload Packages # 4. 打包文件并且上传到当前主分支
               uses: actions/upload-artifact@master

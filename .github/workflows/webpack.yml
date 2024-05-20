@@ -60,5 +60,6 @@ jobs:
               with:
                 name: oblivion-desktop
                 path: |
-                  release/build/*
+                  release/build/*.zip
+                  release/build/*.exe
 

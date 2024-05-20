@@ -57,27 +57,16 @@ jobs:
             - name: Upload files to Artifacts #将文件上载到工件
               uses: actions/upload-artifact@v3
               with:
-                name: oblivion-desktop
                 path: |
                   release/build/*.zip
                   release/build/*.exe
-                  
-
-            - name: Generate release tag #生成发布标签
-              id: tag
-              run: |
-                echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-                touch release.txt
-                [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
-                echo "status=success" >> $GITHUB_OUTPUT
-           
+                             
             - name: Upload firmware to release #上传固件以发布
               uses: softprops/action-gh-release@master
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 tag_name: ${{ steps.tag.outputs.release_tag }}
-                body_path: release.txt
                 path: |
                   release/build/*.zip
                   release/build/*.exe                  

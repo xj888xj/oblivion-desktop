@@ -22,13 +22,13 @@ jobs:
             - name: Checkout git repo
               uses: actions/checkout@v4
 
-            - name: Install Node and NPM #安装Node和NPM
+            - name: Install Node and NPM
               uses: actions/setup-node@v4
               with:
                   node-version: 18
                   cache: npm
 
-            - name: Install and build #安装和构建
+            - name: Install and build
               run: |
                   npm install
                   if [ "$RUNNER_OS" == "macOS" ]; then
@@ -38,7 +38,7 @@ jobs:
                   npm run build
               shell: bash
 
-            - name: Publish releases #发布版本
+            - name: Publish releases
               env:
                   # These values are used for auto updates signing
                   #   APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -49,12 +49,11 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   npm exec electron-builder -- --publish always
-
-
-            - name: Upload files to Artifacts #将文件上载到工件
-              uses: actions/upload-artifact@v3
+                  
+            - name: Upload files to Artifacts
+              uses: actions/upload-artifact@v4
               with:
+                name: oblivion-desktop
                 path: |
                   release/build/*.zip
                   release/build/*.exe
-                  

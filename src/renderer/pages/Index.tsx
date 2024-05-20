@@ -450,12 +450,13 @@ export default function Index() {
                         <div
                             className={classNames(
                                 'inFoot',
+                                'withIp',
                                 isConnected &&
                                     !isLoading &&
                                     proxyMode !== 'none' &&
                                     proxyMode !== '' &&
                                     ipData
-                                    ? 'withIp active'
+                                    ? 'active'
                                     : ''
                             )}
                         >

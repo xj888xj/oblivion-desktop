@@ -54,11 +54,6 @@ jobs:
                   npm exec electron-builder -- --publish always
 
 
-            - name: Upload Packages # 4. 打包文件并且上传到当前主分支
-              uses: actions/upload-artifact@master
-              with:
-                name: ${{env.FILE_NAME}}
-                path: ${{ env.IMAGES_PATH }}
 
             - name: Upload firmware directory
               uses: actions/upload-artifact@main

@@ -55,18 +55,12 @@ jobs:
 
 
 
-            - name: Upload firmware directory
-              uses: actions/upload-artifact@main
+            - name: Upload files to Artifacts
+              uses: actions/upload-artifact@v4
               with:
-                name: ${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-                path: ${{ env.FIRMWARE }}
-
-
-            - name: 上传固件在github空间
-              uses: actions/upload-artifact@v2
-              with:
-                name: ${{matrix.target}}_${{ env.date }}
-                path: ${{ env.FIRMWARE }}
+                name: oblivion-desktop
+                path: |
+                  release/build/*
 
             - name: 上传固件到「奶牛快传」和「wetransfer」
               run: |

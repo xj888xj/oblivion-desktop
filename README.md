@@ -1,6 +1,6 @@
 # Oblivion Desktop
 
-Unofficial Desktop version of [oblivion](https://github.com/bepass-org/oblivion)
+Unofficial Desktop version of [Oblivion](https://github.com/bepass-org/oblivion)
 
 Oblivion provides secure, optimized internet access through a user-friendly Windows/Mac/Linux app using cloudflare warp
 technology
@@ -174,12 +174,13 @@ our [GitHub Issues](https://github.com/bepass-org/oblivion-desktop/issues), [Con
 ## Acknowledgements
 
 This project stands on the shoulders of giants, and we are deeply grateful for the contributions and inspiration
-provided by the following:
+provided by the following friends:
 
 - Cloudflare Warp
 - [warp-plus](https://github.com/bepass-org/warp-plus/) (Yousef Ghobadi & Mark Pashmfouroush)
-- [oblivion](https://github.com/bepass-org/oblivion)
-- [electron](https://www.electronjs.org/)
+- [Oblivion](https://github.com/bepass-org/oblivion)
+- [Electron](https://www.electronjs.org/)
+- [React](https://github.com/facebook/react)
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 - [electron-builder](https://github.com/electron-userland/electron-builder)
 - [GitHub](https://github.com/)

@@ -1,6 +1,6 @@
 # Contribution Guide
 
-Thank you for your interest in contributing to oblivion-desktop! We appreciate your help and support. Here are some guidelines to help you get started:
+Thank you for your interest in contributing to Oblivion Desktop! We appreciate your help and support. Here are some guidelines to help you get started:
 
 ## Where you can help?
 
@@ -17,7 +17,7 @@ Thank you for your interest in contributing to oblivion-desktop! We appreciate y
         -   Make your changes and create a pull request (PR)
 
     -   #### Code Style Guide
-        Follow the code style guidelines. Your PR should be free from type errors. We use Husky, Prettier, and TypeScript to maintain code quality, which should be automatically enabled when you run `npm install`. If not, set it up with `npm run prepare`. Husky will check your code style using `prettier` before each commit and possible type errors using `tsc` before every push. You can also manually fix code style errors by running `npm run format`.
+        Follow the code style guidelines. Your PR should be free from type errors. We use TypeScript, Prettier, and Husky to maintain code quality, which should be automatically enabled when you run `npm install`. If not, set it up with `npm run prepare`. Husky will run `prettier` before each commit to ensure code style, and `tsc` before every push to check for possible type errors. You can also manually fix code style errors by running `npm run format`.
 
 -   ### 🌐 Translation
 

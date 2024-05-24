@@ -13,6 +13,7 @@ import packageJsonData from '../../../package.json';
 import { defaultSettings } from '../../defaultSettings';
 import { ipcRenderer, onEscapeKeyPressed } from '../lib/utils';
 import { checkInternetToast, defaultToast, defaultToastWithSubmitButton } from '../lib/toasts';
+import { checkNewUpdate } from '../lib/checkNewUpdate';
 import { cfFlag } from '../lib/cfFlag';
 
 let cachedIpInfo: any = null;
@@ -61,7 +62,7 @@ export default function Index() {
                 const data = await response.json();
                 const latestVersion = String(data[0]?.name);
                 const appVersion = String(packageJsonData?.version);
-                if (latestVersion && latestVersion !== appVersion) {
+                if (latestVersion && checkNewUpdate(appVersion, latestVersion)) {
                     hasNewUpdate = true;
                 }
             } else {
@@ -347,6 +348,18 @@ export default function Index() {
                         </li>*/}
                         {/*<li className='divider'></li>*/}
                         <li>
+                            <Link to={'/network'}>
+                                <i className={'material-icons'}>&#xeb2f;</i>
+                                <span>{appLang?.home?.drawer_settings_network}</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/scanner'}>
+                                <i className={'material-icons'}>&#xe2db;</i>
+                                <span>{appLang?.home?.drawer_settings_scanner}</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to={'/options'}>
                                 <i className={'material-icons'}>&#xe8b8;</i>
                                 <span>{appLang?.home?.drawer_settings_app}</span>
@@ -358,6 +371,13 @@ export default function Index() {
                                 <span>{appLang?.home?.drawer_log}</span>
                             </Link>
                         </li>
+                        <li className='divider' />
+                        {/*<li>
+                            <Link to='/speed'>
+                                <i className={'material-icons'}>&#xe9e4;</i>
+                                <span>{appLang?.home?.drawer_speed_test}</span>
+                            </Link>
+                        </li>*/}
                         <li className={hasNewUpdate ? '' : 'hidden'}>
                             <a
                                 href='https://github.com/bepass-org/oblivion-desktop/releases/latest'
@@ -371,13 +391,6 @@ export default function Index() {
                                 </div>
                             </a>
                         </li>
-                        <li className='divider' />
-                        {/*<li>
-                            <Link to='/speed'>
-                                <i className={'material-icons'}>&#xe9e4;</i>
-                                <span>{appLang?.home?.drawer_speed_test}</span>
-                            </Link>
-                        </li>*/}
                         <li>
                             <a
                                 onClick={() => {

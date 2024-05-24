@@ -22,14 +22,12 @@ export const getUserSettings = async () => {
     //const gool = await settings.get('gool');
     const method = await settings.get('method');
     const hostIP = await settings.get('hostIP');
+    const rtt = await settings.get('rtt');
 
     // ! push one arg(flag) at a time
     // https://stackoverflow.com/questions/55328916/electron-run-shell-commands-with-arguments
-    // ipType
-    if (typeof ipType === 'string' && ipType !== '') {
-        args.push(ipType);
-    }
-    // port, hostIP
+
+    // hostIP & port
     args.push('--bind');
     args.push(
         `${typeof hostIP === 'string' && hostIP.length > 0 ? hostIP : defaultSettings.hostIP}:${typeof port === 'string' || typeof port === 'number' ? port : defaultSettings.port}`
@@ -65,6 +63,13 @@ export const getUserSettings = async () => {
         typeof endpoint === 'undefined'
     ) {
         args.push(`--scan`);
+        if (typeof ipType === 'string' && ipType !== '') {
+            args.push(ipType);
+        }
+        if (typeof rtt === 'string') {
+            args.push('--rtt');
+            args.push(rtt);
+        }
     } else {
         // endpoint
         args.push('--endpoint');

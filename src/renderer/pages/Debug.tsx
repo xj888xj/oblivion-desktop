@@ -9,8 +9,9 @@ import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
 
 export default function Debug() {
     const [log, setLog] = useState('');
+    const [autoScroll, setAutoScroll] = useState<boolean>(false);
     const logRef = useRef<any>(null);
-    const [isBottom, setIsBottom] = useState(true);
+    //const [isBottom, setIsBottom] = useState(true);
     const appLang = getLang();
 
     // asking for log every 1.5sec
@@ -23,13 +24,32 @@ export default function Debug() {
         return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        if (autoScroll) {
+            logRef?.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end'
+            });
+        }
+    }, [autoScroll]);
+
+    useEffect(() => {
+        if (autoScroll) {
+            logRef?.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end'
+            });
+        }
+    }, [log]);
+
     useGoBackOnEscape();
 
+    let userFlag = username?.startsWith('\\') ? '<USERNAME>' : '<USERNAME>';
     ipcRenderer.on('getLogs', (data) => {
         let logs = String(data);
         // protect user privacy
         // @ts-ignore
-        logs = logs.replaceAll(username, '<USERNAME>');
+        logs = logs.replaceAll(username, userFlag);
         // updatedData = updatedData.replace(/([A-Z]):\\/g, '<DRIVE>:\\');
         // updatedData = updatedData.replace(/\/home\/[^\\]+\//, 'home/<USER>/');
         // updatedData = updatedData.replace(/\\www\\[^\\]+\\/, '\\www\\<DIR>\\');
@@ -48,7 +68,7 @@ export default function Debug() {
     //     defaultToast(`${appLang?.toast?.cleared}`, 'CLEARED', 2000);
     // };
 
-    const onScroll = () => {
+    /*const onScroll = () => {
         const isNearBottom =
             Math.ceil(window.innerHeight + window.scrollY + 200) >=
             document.documentElement.scrollHeight;
@@ -64,7 +84,7 @@ export default function Debug() {
         return () => {
             window.removeEventListener('scroll', onScroll);
         };
-    }, []);
+    }, []);*/
 
     return (
         <>
@@ -82,7 +102,30 @@ export default function Debug() {
                         >&#xf0ff;</i>*/}
                         {log?.length > 1000 && (
                             <>
-                                {isBottom ? (
+                                {autoScroll ? (
+                                    <>
+                                        <i
+                                            className='material-icons'
+                                            onClick={() => {
+                                                setAutoScroll(false);
+                                            }}
+                                        >
+                                            &#xe1a2;
+                                        </i>
+                                    </>
+                                ) : (
+                                    <>
+                                        <i
+                                            className='material-icons'
+                                            onClick={() => {
+                                                setAutoScroll(true);
+                                            }}
+                                        >
+                                            &#xe038;
+                                        </i>
+                                    </>
+                                )}
+                                {/*{isBottom ? (
                                     <>
                                         <i
                                             className='material-icons'
@@ -110,7 +153,7 @@ export default function Debug() {
                                             &#xeb2e;
                                         </i>
                                     </>
-                                )}
+                                )}*/}
                             </>
                         )}
                         <i

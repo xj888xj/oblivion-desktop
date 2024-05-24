@@ -270,6 +270,15 @@ if (!gotTheLock) {
         log.info('od is ready!');
     };
 
+    async function startAtLogin() {
+        const getOpenAtLogin = await settings.get('openAtLogin');
+        app.setLoginItemSettings({
+            openAtLogin: Boolean(getOpenAtLogin || false)
+        });
+    }
+
+    startAtLogin();
+
     /**
      * Add event listeners...
      */

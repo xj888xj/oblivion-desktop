@@ -44,8 +44,8 @@ technology
         <tr>
             <td>Network Configuration</td>
             <td>
-                :white_check_mark: Proxy(No Change)<br>
-                :white_check_mark: System Proxy<br>
+                :white_check_mark: Proxy <small>(No Change)</small><br>
+                :white_check_mark: System Proxy <small>(with PAC)</small><br>
                 :white_large_square: TUN
             </td>
         </tr>
@@ -85,6 +85,8 @@ technology
         <tr>
             <td>Other</td>
             <td>
+                :white_check_mark: Scanner<br>
+                :white_check_mark: Ping<br>
                 :white_large_square: SpeedTest<br>
                 :white_large_square: Inline Update<br>
                 :white_large_square: Accessibility
@@ -120,10 +122,11 @@ technology
         <tr>
             <td>macOS</td>
             <td>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
+                <small>Coming Soon ...</small>
+                <!-- <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-arm64-ea005e.svg?logo=apple"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/DMG-x64-ea005e.svg?logo=apple"></a><br>
                 <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-arm64-bc544b.svg?logo=apple" /></a><br>
-                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br>
+                <a href="https://github.com/bepass-org/oblivion-desktop/releases"><img src="https://img.shields.io/badge/PKG-x64-bc544b.svg?logo=apple" /></a><br> -->
             </td>
             <td></td>
         </tr>

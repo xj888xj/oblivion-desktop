@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import { Toaster } from 'react-hot-toast';
 import Nav from '../components/Nav';
-import EndpointModal from '../components/Modal/Endpoint';
+import Tabs from '../components/Tabs';
 import LicenseModal from '../components/Modal/License';
 import { settings } from '../lib/settings';
 import { countries, defaultSettings } from '../../defaultSettings';
@@ -18,8 +18,8 @@ export default function Settings() {
     const { isConnected, isLoading } = useStore();
 
     //const [scan, setScan] = useState(true);
-    const [endpoint, setEndpoint] = useState();
-    const [showEndpointModal, setShowEndpointModal] = useState(false);
+    //const [endpoint, setEndpoint] = useState();
+    //const [showEndpointModal, setShowEndpointModal] = useState(false);
     //const [ipType, setIpType] = useState<undefined | string>();
     //const [psiphon, setPsiphon] = useState<undefined | boolean>();
     const [location, setLocation] = useState<undefined | string>();
@@ -40,9 +40,9 @@ export default function Settings() {
         /*settings.get('scan').then((value) => {
             setScan(typeof value === 'undefined' ? defaultSettings.scan : value);
         });*/
-        settings.get('endpoint').then((value) => {
+        /*settings.get('endpoint').then((value) => {
             setEndpoint(typeof value === 'undefined' ? defaultSettings.endpoint : value);
-        });
+        });*/
         /*settings.get('ipType').then((value) => {
             setIpType(typeof value === 'undefined' ? defaultSettings.ipType : value);
         });*/
@@ -64,7 +64,6 @@ export default function Settings() {
     }, []);
 
     if (
-        typeof endpoint === 'undefined' ||
         typeof location === 'undefined' ||
         typeof license === 'undefined' ||
         typeof method === 'undefined'
@@ -82,7 +81,7 @@ export default function Settings() {
     return (
         <>
             <Nav title={appLang?.settings?.title} />
-            <EndpointModal
+            {/*<EndpointModal
                 {...{
                     endpoint,
                     setEndpoint
@@ -93,7 +92,7 @@ export default function Settings() {
                     setShowEndpointModal(false);
                     settingsHaveChangedToast({ ...{ isConnected, isLoading } });
                 }}
-            />
+            />*/}
             <LicenseModal
                 {...{
                     license,
@@ -107,6 +106,7 @@ export default function Settings() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
+                <Tabs active='settings' />
                 <div className='settings'>
                     {/*<div
                         className={'item'}
@@ -250,12 +250,9 @@ export default function Settings() {
                     {appLang?.settings?.more}
                 </div>
                 <div className='settings'>
-                    <div
-                        className={classNames('item' /*, scan ? 'disabled' : ''*/)}
+                    {/*<div
+                        className={classNames('item')}
                         onClick={() => {
-                            /*if (!scan) {
-                                setShowEndpointModal(true);
-                            }*/
                             setShowEndpointModal(true);
                         }}
                     >
@@ -264,7 +261,7 @@ export default function Settings() {
                             <span className='dirLeft'>{endpoint}</span>
                         </div>
                         <div className='info'>{appLang?.settings?.endpoint_desc}</div>
-                    </div>
+                    </div>*/}
                     <div
                         className='item'
                         onClick={() => {

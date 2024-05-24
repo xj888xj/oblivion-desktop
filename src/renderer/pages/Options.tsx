@@ -8,11 +8,11 @@ import { settings } from '../lib/settings';
 import { defaultSettings, languages } from '../../defaultSettings';
 import LottieFile from '../../../assets/json/1713988096625.json';
 import RestoreModal from '../components/Modal/Restore';
-import PortModal from '../components/Modal/Port';
-import { loadingToast, settingsHaveChangedToast } from '../lib/toasts';
+import { loadingToast } from '../lib/toasts';
 import { useStore } from '../store';
 import { getLang, loadLang } from '../lib/loaders';
 import useGoBackOnEscape from '../hooks/useGoBackOnEscape';
+import Tabs from '../components/Tabs';
 
 export default function Options() {
     const { isConnected, isLoading } = useStore();
@@ -21,17 +21,10 @@ export default function Options() {
 
     const [theme, setTheme] = useState<undefined | string>();
     const [lang, setLang] = useState('');
-    const [ipData, setIpData] = useState<undefined | boolean>();
     const [systemTray, setSystemTray] = useState<undefined | boolean>();
+    const [openAtLogin, setOpenAtLogin] = useState<undefined | boolean>();
     const [showRestoreModal, setShowRestoreModal] = useState(false);
-    //const [autoSetProxy, setAutoSetProxy] = useState<undefined | boolean>();
-    // TODO rename to networkConfiguration
-    const [proxyMode, setProxyMode] = useState('');
-    const [shareVPN, setShareVPN] = useState<undefined | boolean>();
-    const [port, setPort] = useState();
-    const [showPortModal, setShowPortModal] = useState(false);
     const [appLang, setAppLang] = useState(getLang());
-    const [dns, setDns] = useState<undefined | boolean>();
 
     const { state } = useLocation();
     const { targetId } = state || {};
@@ -56,39 +49,19 @@ export default function Options() {
         settings.get('lang').then((value) => {
             setLang(typeof value === 'undefined' ? defaultSettings.lang : value);
         });
-        settings.get('ipData').then((value) => {
-            setIpData(typeof value === 'undefined' ? defaultSettings.ipData : value);
-        });
         settings.get('systemTray').then((value) => {
             setSystemTray(typeof value === 'undefined' ? defaultSettings.systemTray : value);
         });
-        settings.get('port').then((value) => {
-            setPort(typeof value === 'undefined' ? defaultSettings.port : value);
-        });
-        /*settings.get('autoSetProxy').then((value) => {
-            setAutoSetProxy(typeof value === 'undefined' ? defaultSettings.autoSetProxy : value);
-        });*/
-        settings.get('proxyMode').then((value) => {
-            setProxyMode(typeof value === 'undefined' ? defaultSettings.proxyMode : value);
-        });
-        settings.get('shareVPN').then((value) => {
-            setShareVPN(typeof value === 'undefined' ? defaultSettings.shareVPN : value);
-        });
-        settings.get('dns').then((value) => {
-            setDns(typeof value === 'undefined' ? defaultSettings.dns : value);
+        settings.get('openAtLogin').then((value) => {
+            setOpenAtLogin(typeof value === 'undefined' ? defaultSettings.openAtLogin : value);
         });
     }, []);
 
     if (
         typeof theme === 'undefined' ||
         typeof lang === 'undefined' ||
-        typeof ipData === 'undefined' ||
-        typeof port === 'undefined' ||
-        //typeof autoSetProxy === 'undefined' ||
-        typeof proxyMode === 'undefined' ||
-        typeof shareVPN === 'undefined' ||
-        typeof dns === 'undefined' ||
-        typeof systemTray === 'undefined'
+        typeof systemTray === 'undefined' ||
+        typeof openAtLogin === 'undefined'
     )
         return (
             <>
@@ -103,26 +76,10 @@ export default function Options() {
     return (
         <>
             <Nav title={appLang?.settings?.option} />
-            <PortModal
-                {...{
-                    port,
-                    setPort
-                }}
-                title={appLang?.modal?.port_title}
-                isOpen={showPortModal}
-                onClose={() => {
-                    setShowPortModal(false);
-                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                }}
-            />
             <RestoreModal
                 {...{
                     setTheme,
-                    setIpData,
                     setSystemTray,
-                    setPort,
-                    setProxyMode,
-                    setShareVPN,
                     setLang
                 }}
                 title={appLang?.modal?.restore_title}
@@ -138,122 +95,7 @@ export default function Options() {
                 }}
             />
             <div className={classNames('myApp', 'normalPage')}>
-                <div className='settings'>
-                    {/*<div
-                        className={classNames('item', autoSetProxy ? 'checked' : '')}
-                        onClick={() => {
-                            setAutoSetProxy(!autoSetProxy);
-                            settings.set('autoSetProxy', !autoSetProxy);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function() {
-                                if (autoSetProxy) {
-                                    setIpData(false);
-                                    settings.set('ipData', false);
-                                }
-                            }, 1000);
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.auto_set_proxy}</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', autoSetProxy ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.auto_set_proxy_desc}</div>
-                    </div>*/}
-                    <div className={'item'}>
-                        <label className='key'>{appLang?.settings?.proxy_mode}</label>
-                        <div className='value'>
-                            <select
-                                onChange={(e) => {
-                                    setProxyMode(e.target.value);
-                                    settings.set('proxyMode', e.target.value);
-                                    settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                                    setTimeout(function () {
-                                        if (e.target.value === 'none') {
-                                            setIpData(false);
-                                            settings.set('ipData', false);
-                                        }
-                                    }, 1000);
-                                }}
-                                value={proxyMode}
-                            >
-                                <option value='none'>None</option>
-                                <option value='system'>System Proxy</option>
-                                {/*<option value='tun' disabled>TUN2Sock</option>*/}
-                            </select>
-                        </div>
-                        <div className='info'>{appLang?.settings?.proxy_mode_desc}</div>
-                    </div>
-                    <div
-                        className='item'
-                        onClick={() => {
-                            setShowPortModal(true);
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.port}</label>
-                        <div className='value'>
-                            <span className='dirLeft'>{port}</span>
-                        </div>
-                        <div className='info'>{appLang?.settings?.port_desc}</div>
-                    </div>
-                    <div
-                        className={classNames('item', shareVPN ? 'checked' : '')}
-                        onClick={() => {
-                            setShareVPN(!shareVPN);
-                            settings.set('shareVPN', !shareVPN);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                            setTimeout(function () {
-                                settings.set('hostIP', !shareVPN ? '0.0.0.0' : '127.0.0.1');
-                            }, 1000);
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.share_vpn}</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', shareVPN ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.share_vpn_desc}</div>
-                    </div>
-                    {/*<div
-                        className={classNames('item')}
-                        onClick={() => {
-                            setDns(!dns);
-                            settings.set('dns', !dns);
-                            settingsHaveChangedToast({ ...{ isConnected, isLoading } });
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.dns}</label>
-                        <div className='value'>
-                            <div className={'checkbox'}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.dns_desc}</div>
-                    </div>*/}
-                    <div
-                        className={classNames('item', proxyMode === 'none' ? 'disabled' : '')}
-                        onClick={() => {
-                            if (proxyMode !== 'none') {
-                                setIpData(!ipData);
-                                settings.set('ipData', !ipData);
-                            }
-                        }}
-                    >
-                        <label className='key'>{appLang?.settings?.ip_data}</label>
-                        <div className='value'>
-                            <div className={classNames('checkbox', ipData ? 'checked' : '')}>
-                                <i className='material-icons'>&#xe876;</i>
-                            </div>
-                        </div>
-                        <div className='info'>{appLang?.settings?.ip_data_desc}</div>
-                    </div>
-                </div>
-                <div className='moreSettings'>
-                    <i className='material-icons'>&#xe313;</i>
-                    {appLang?.settings?.more}
-                </div>
+                <Tabs active='options' />
                 <div className='settings'>
                     <div
                         className='item'
@@ -311,6 +153,21 @@ export default function Options() {
                     <div
                         className='item'
                         onClick={() => {
+                            setOpenAtLogin(!openAtLogin);
+                            settings.set('openAtLogin', !openAtLogin);
+                        }}
+                    >
+                        <label className='key'>{appLang?.settings?.open_login}</label>
+                        <div className='value'>
+                            <div className={classNames('checkbox', openAtLogin ? 'checked' : '')}>
+                                <i className='material-icons'>&#xe876;</i>
+                            </div>
+                        </div>
+                        <div className='info'>{appLang?.settings?.open_login_desc}</div>
+                    </div>
+                    <div
+                        className='item'
+                        onClick={() => {
                             setSystemTray(!systemTray);
                             settings.set('systemTray', !systemTray);
                         }}
@@ -323,6 +180,12 @@ export default function Options() {
                         </div>
                         <div className='info'>{appLang?.settings?.system_tray_desc}</div>
                     </div>
+                </div>
+                <div className='moreSettings'>
+                    <i className='material-icons'>&#xe313;</i>
+                    {appLang?.settings?.more}
+                </div>
+                <div className='settings'>
                     <div
                         className={'item'}
                         onClick={() => {

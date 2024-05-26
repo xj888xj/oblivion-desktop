@@ -58,14 +58,4 @@ jobs:
                   release/build/*.zip
                   release/build/*.exe
 
-            - name: Create Release and Upload Release Asset  #上传固件以发布
-              uses: softprops/action-gh-release@v1
-              with:
-                tag_name: ${{ github.ref }}
-                name: Release ${{ github.ref }}
-                body: TODO New Release.
-                draft: false
-                prerelease: false
-                file: |
-                  release\build\oblivion-desktop-win-x64.zip
-                  release\build\oblivion-desktop-win-x64.exe  
+

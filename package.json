@@ -11,16 +11,19 @@
         "url": "https://github.com/bepass-org/oblivion-desktop/issues",
         "email": "ircfspace@gmail.com"
     },
-    "version": "0.7.5-beta",
+    "version": "0.8.18-beta",
     "license": "Restrictive",
     "main": "./src/main/main.ts",
     "scripts": {
+        "eval": "eval process.",
         "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
         "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
         "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
         "prepare": "ts-node script/dlWp.ts && husky",
-        "postinstall": " ts-node script/makeRegeditVBSAvailable.ts && ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+        "postinstall": "ts-node ./script/postinstall.ts",
+        "postinstall:darwin-linux": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+        "postinstall:windows": "ts-node script/makeRegeditVBSAvailable.ts && ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
         "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
         "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never && npm run build:dll",
         "package:linux": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder --linux --dir --publish never && npm run build:dll",
@@ -191,33 +194,25 @@
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "mac": {
-            "target": {
-                "target": "default",
-                "arch": [
-                    "arm64",
-                    "x64"
-                ]
-            },
-            "type": "distribution",
-            "hardenedRuntime": true,
-            "entitlements": "assets/entitlements.mac.plist",
-            "entitlementsInherit": "assets/entitlements.mac.plist",
-            "gatekeeperAssess": false,
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "arm64",
+                        "x64"
+                    ]
+                }
+            ],
             "identity": null
         },
         "dmg": {
-            "contents": [
-                {
-                    "x": 130,
-                    "y": 220
-                },
-                {
-                    "x": 410,
-                    "y": 220,
-                    "type": "link",
-                    "path": "/Applications"
-                }
-            ],
             "writeUpdateInfo": false
         },
         "win": {

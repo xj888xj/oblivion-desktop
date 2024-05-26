@@ -271,19 +271,20 @@ if (!gotTheLock) {
     };
 
     async function startAtLogin() {
-        const getOpenAtLogin = await settings.get('openAtLogin');
-        app.setLoginItemSettings({
-            openAtLogin: Boolean(getOpenAtLogin || false)
-        });
+        if (process.env.NODE_ENV !== 'development') {
+            const checkOpenAtLogin = await settings.get('openAtLogin');
+            app.setLoginItemSettings({
+                openAtLogin: typeof checkOpenAtLogin === 'boolean' ? checkOpenAtLogin : false
+            });
+        }
     }
-
-    startAtLogin();
 
     /**
      * Add event listeners...
      */
 
     app.on('window-all-closed', async () => {
+        await startAtLogin();
         exitTheApp(mainWindow, regeditVbsDirPath);
     });
 

@@ -58,4 +58,13 @@ jobs:
                   release/build/*.zip
                   release/build/*.exe
 
-
+            - name: Upload firmware to release #上传固件以发布
+              uses: softprops/action-gh-release@master
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: ${{ steps.tag.outputs.release_tag }}
+                body_path: release.txt
+                files: |
+                  release/build/blivion-desktop-win-x64.zip
+                  release/build/oblivion-desktop-win-x64.exe

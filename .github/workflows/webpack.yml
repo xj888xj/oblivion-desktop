@@ -65,12 +65,5 @@ jobs:
               with:
                 tag_name: ${{ github.ref }}
                 release_name: Release ${{ github.ref }}
-                body: |
-                  Changes in this Release
-                  - First Change
-                  - Second Change
                 draft: false
-                prerelease: false
-                files: |
-                  release/build/blivion-desktop-win-x64.zip
-                  release/build/oblivion-desktop-win-x64.exe  
+                prerelease: false   

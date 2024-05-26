@@ -58,7 +58,7 @@ jobs:
                   release/build/*.zip
                   release/build/*.exe 
 
-            - name: 发布版本
+            - name: Upload files to releases
               uses: svenstaro/upload-release-action@2.2.0
               with:
                 repo_token: ${{ secrets.GITHUB_TOKEN }}
